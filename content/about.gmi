@@ -1,0 +1,11 @@
+# Über dieses Projekt
+
+Dies ist ein Docker-Container für GmCapsule, einen erweiterbaren Gemini/Titan-Server.
+
+## Technische Details
+
+* Server: GmCapsule (Python)
+* Container: Docker mit Alpine Linux
+* Protokolle: Gemini & Titan
+
+=> index.gmi Zurück zur Startseite
