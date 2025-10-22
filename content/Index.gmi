@@ -1,17 +1,1 @@
-# Willkommen zu GmCapsule!
-
-Dies ist eine Test-Installation von GmCapsule in Docker.
-
-## Features
-
-* Gemini-Protokoll Support
-* Titan-Upload-Funktionalität
-* Erweiterbar durch Python-Module
-
-## Links
-
-=> about.gmi Über dieses Projekt
-=> https://github.com/Smeeth/gmcapsule-Docker Quellcode auf GitHub
-
----
-Powered by GmCapsule
+delete this file!
