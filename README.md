@@ -1,7 +1,7 @@
 # GmCapsule Docker
 
-[![Docker Build](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/docker-build.yml/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/docker-build.yml)
-[![Security Scan](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/security-scan.yml/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/security-scan.yml)
+[![Docker Build](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/docker-build.yml/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/docker-build.yaml)
+[![Security Scan](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/security-scan.yml/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/security-scan.yaml)
 [![License](https://img.shields.io/badge/License-BSD--2--Clause-orange.svg)](LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/smeeth/gmcapsule?style=flat-square)](https://hub.docker.com/r/smeeth/gmcapsule)
 [![Python](https://img.shields.io/badge/Python-3.13-green.svg)](https://www.python.org/)
