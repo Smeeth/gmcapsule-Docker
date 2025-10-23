@@ -1,8 +1,7 @@
 # GmCapsule Docker
 
 [![GitHub Actions](https://github.com/Smeeth/gmcapsule-Docker/workflows/Build%20and%20Push%20Docker%20Image/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions)
-[![License](https://img.shields.io/badge/License-BSD--2--Clause-orange.svg)](LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/smeeth/gmcapsule?style=flat-square)](https://hub.docker.com/r/smeeth/gmcapsule)
+[![License](https://img.shields.io/badge/License-BSD--2--Clause-orange.svg)]
 [![Python](https://img.shields.io/badge/Python-3.13-green.svg)](https://www.python.org/)
 [![Gemini](https://img.shields.io/badge/Protocol-Gemini%20%26%20Titan-purple.svg)](https://geminiprotocol.net/)
 
