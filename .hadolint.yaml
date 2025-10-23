@@ -1,9 +1,16 @@
+failure-threshold: warning
+
 ignored:
-  - DL3018  # Pin versions in apk add
-  - DL3059  # Multiple RUN commands
+  - DL3018  # Pin versions in apk add (oft zu streng für Alpine)
+  - DL3059  # Multiple consecutive RUN commands
 
 trustedRegistries:
   - docker.io
   - ghcr.io
+  - python
 
-failure-threshold: warning
+# Optional: Strikte Regeln für Production
+# override:
+#   error:
+#     - DL3001  # Verwende yum update nicht im Dockerfile
+#     - DL3007  # Verwende :latest tags nicht
