@@ -502,9 +502,7 @@ docker stop gmcapsule-test && docker rm gmcapsule-test
 ### Community
 
 - 💬 [GitHub Issues](https://github.com/Smeeth/gmcapsule-Docker/issues)
-- 🔒 [Security Policy](SECURITY.md)
-- 🌟 [Gemini Mailing List](https://lists.orbitalfox.eu/listinfo/gemini)
-- 🗣️ [Reddit /r/Gemini](https://reddit.com/r/gemini)
+- 🗣️ [Reddit /r/Gemini](https://reddit.com/r/geminiprotocol)
 
 ## 🔖 Version Tags
 
