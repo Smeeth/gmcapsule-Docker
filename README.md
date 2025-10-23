@@ -291,4 +291,3 @@ Contributions are welcome! Please:
 ---
 
 Made with ❤️ for the small internet
-```
