@@ -1,5 +1,5 @@
 # Multi-Stage Build für kleineres Image
-FROM python:3.13-alpine AS builder
+FROM python:3.14-alpine AS builder
 
 # Build-Dependencies
 RUN apk add --no-cache \
@@ -10,7 +10,7 @@ RUN apk add --no-cache \
 RUN pip install --no-cache-dir --user gmcapsule
 
 # Runtime Stage
-FROM python:3.13-alpine
+FROM python:3.14-alpine
 
 # Runtime-User (non-root für Sicherheit)
 RUN addgroup -g 1000 gemini && \
