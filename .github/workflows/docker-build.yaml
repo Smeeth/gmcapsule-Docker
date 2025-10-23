@@ -7,19 +7,24 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
-      - name: Build Docker image
-        uses: docker/build-push-action@v5
+      # Test Build: Nur AMD64, mit load
+      - name: Build Docker image for testing
+        uses: docker/build-push-action@v6
         with:
           context: .
-          push: false
+          platforms: linux/amd64  # Nur eine Platform für Test
+          load: true              # Lädt ins lokale Docker
           tags: gmcapsule:test
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -29,4 +34,21 @@ jobs:
           docker run -d --name gmcapsule-test gmcapsule:test
           sleep 5
           docker logs gmcapsule-test
+          docker ps -a
           docker stop gmcapsule-test
+      
+      - name: Test Gemini port
+        run: |
+          docker run -d --name gmcapsule-port-test -p 1965:1965 gmcapsule:test
+          sleep 5
+          # Optional: Teste ob Port offen ist
+          docker logs gmcapsule-port-test
+          docker stop gmcapsule-port-test
+      
+      - name: Test health check
+        run: |
+          docker run -d --name gmcapsule-health-test gmcapsule:test
+          sleep 10
+          # Prüfe Health Status
+          docker inspect --format='{{.State.Health.Status}}' gmcapsule-health-test || echo "No health check defined"
+          docker stop gmcapsule-health-test
