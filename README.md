@@ -1,7 +1,8 @@
 # GmCapsule Docker
 
 [![GitHub Actions](https://github.com/Smeeth/gmcapsule-Docker/workflows/Build%20and%20Push%20Docker%20Image/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions)
-[![License](https://img.shields.io/badge/License-BSD--2--Clause-orange.svg)]
+[![SBOM](https://img.shields.io/badge/SBOM-CycloneDX-blueviolet)](https://github.com/Smeeth/gmcapsule-Docker/releases/latest/download/trivy-sbom.json)
+[![Software License Status: BSD-2-Clause Open Source License](https://img.shields.io/badge/License-BSD--2--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 [![Python](https://img.shields.io/badge/Python-3.13-green.svg)](https://www.python.org/)
 [![Gemini](https://img.shields.io/badge/Protocol-Gemini%20%26%20Titan-purple.svg)](https://geminiprotocol.net/)
 
