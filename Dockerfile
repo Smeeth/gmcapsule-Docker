@@ -21,8 +21,8 @@ LABEL stage=builder
 # Install build dependencies
 RUN --mount=type=cache,target=/var/cache/apk \
     apk add --no-cache \
-        build-base=~0.5 \
-        openssl-dev=~3.3
+        build-base \
+        openssl-dev
 
 # Install GmCapsule with pinned version
 ARG GMCAPSULE_VERSION
@@ -35,6 +35,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # =============================================================================
 FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
 
+# Build arguments for labels
+ARG GMCAPSULE_VERSION
+ARG BUILD_DATE
+ARG VCS_REF
+
 # OCI Image Labels (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.title="GmCapsule Docker" \
       org.opencontainers.image.description="Extensible Gemini and Titan protocol server" \
@@ -45,7 +50,8 @@ LABEL org.opencontainers.image.title="GmCapsule Docker" \
       org.opencontainers.image.source="https://github.com/Smeeth/gmcapsule-Docker" \
       org.opencontainers.image.documentation="https://github.com/Smeeth/gmcapsule-Docker/blob/main/README.md" \
       org.opencontainers.image.version="${GMCAPSULE_VERSION}" \
-      org.opencontainers.image.created="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+      org.opencontainers.image.created="${BUILD_DATE}" \
+      org.opencontainers.image.revision="${VCS_REF}"
 
 # Custom labels
 LABEL maintainer="Eibo Richter <eibo.richter@gmail.com>" \
@@ -56,9 +62,9 @@ LABEL maintainer="Eibo Richter <eibo.richter@gmail.com>" \
 # Install runtime dependencies only
 RUN --mount=type=cache,target=/var/cache/apk \
     apk add --no-cache \
-        ca-certificates=~20240705 \
-        openssl=~3.3 \
-        tzdata=~2024 && \
+        ca-certificates \
+        openssl \
+        tzdata && \
     # Create non-root user with explicit UID/GID
     addgroup -g 1000 gemini && \
     adduser -D -u 1000 -G gemini -h /home/gemini -s /bin/sh gemini
@@ -104,13 +110,3 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 # Entrypoint and command
 ENTRYPOINT ["gmcapsuled"]
 CMD ["--config", "/etc/gmcapsule/config.ini"]
-
-# =============================================================================
-# Build metadata
-# =============================================================================
-ARG BUILD_DATE
-ARG VCS_REF
-ARG VERSION
-
-LABEL org.opencontainers.image.revision="${VCS_REF}" \
-      org.opencontainers.image.created="${BUILD_DATE}"
