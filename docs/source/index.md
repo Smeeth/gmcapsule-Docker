@@ -10,10 +10,10 @@ Welcome to the GmCapsule Docker documentation. This guide will help you deploy a
 
 GmCapsule is an extensible server for the [Gemini protocol](https://geminiprotocol.net/), written in Python by skyjake (developer of the Lagrange browser). It supports:
 
-- **Gemini Protocol** - Lightweight, privacy-focused protocol
-- **Titan Protocol** - File upload extension
-- **CGI Support** - Dynamic content generation
-- **Python Extensions** - Modular architecture
+- **Gemini Protocol** – Lightweight, privacy-focused protocol
+- **Titan Protocol** – File upload extension
+- **CGI Support** – Dynamic content generation
+- **Python Extensions** – Modular architecture
 
 ## What is this Docker Container?
 
@@ -29,10 +29,16 @@ This project provides a production-ready Docker container for GmCapsule with:
 
 Get started in minutes:
 
-1. **Pull the image**: `docker pull ghcr.io/smeeth/gmcapsule-docker:latest`
+1. **Pull the image**:  
+   ```
+   docker pull ghcr.io/smeeth/gmcapsule-docker:latest
+   ```
 2. **Create configuration**: See our [Quick Start Guide](quickstart.md)
-3. **Run the container**: Use Docker or Docker Compose
-4. **Access your capsule**: Connect with a Gemini browser
+3. **Run the container**:  
+   ```
+   docker compose up -d
+   ```
+4. **Access your capsule**: Connect with a Gemini browser.
 
 ```
 New to Gemini? Check out our [Quick Start Guide](quickstart.md) for a step-by-step walkthrough.
@@ -124,13 +130,13 @@ Common issues and solutions
 
 ## Project Links
 
-- 📦 [GitHub Repository](https://github.com/Smeeth/gmcapsule-Docker)
-- 🐳 [Docker Hub](https://hub.docker.com/r/smeeth/gmcapsule-docker)
-- 🌐 [GmCapsule Upstream](https://git.skyjake.fi/gemini/gmcapsule/)
-- 💬 [Report Issues](https://github.com/Smeeth/gmcapsule-Docker/issues)
+- [📦 GitHub Repository](https://github.com/Smeeth/gmcapsule-Docker)
+- [🐳 Docker Hub](https://hub.docker.com/r/smeeth/gmcapsule-docker)
+- [🌐 GmCapsule Upstream](https://git.skyjake.fi/gemini/gmcapsule/)
+- [💬 Report Issues](https://github.com/Smeeth/gmcapsule-Docker/issues)
 
 ## Indices and Tables
 
-* {ref}`genindex`
-* {ref}`modindex`
-* {ref}`search`
+- {ref}`genindex`
+- {ref}`modindex`
+- {ref}`search`
