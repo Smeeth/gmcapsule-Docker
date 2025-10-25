@@ -1,0 +1,33 @@
+/* Custom styles for GmCapsule Docker documentation */
+
+:root {
+    --gemini-purple: #8b4d8e;
+    --docker-blue: #2496ed;
+}
+
+/* Better code block styling */
+.highlight {
+    border-left: 3px solid var(--docker-blue);
+    padding-left: 1em;
+}
+
+/* Admonition styling */
+.admonition {
+    border-left: 4px solid var(--gemini-purple);
+}
+
+/* Better table styling */
+table.docutils {
+    border: none;
+    border-collapse: collapse;
+}
+
+table.docutils th {
+    background-color: var(--docker-blue);
+    color: white;
+}
+
+/* Code button styling */
+button.copybtn {
+    background-color: var(--docker-blue);
+}
