@@ -25,22 +25,27 @@ This project provides a production-ready Docker container for GmCapsule with:
 - ✅ Health checks and monitoring
 - ✅ Easy configuration and deployment
 
-## Quick Links
+## Quick Start
 
-- [Installation Guide](installation.md)
-- [Configuration Reference](configuration.md)
-- [Usage Examples](usage.md)
-- [Troubleshooting](troubleshooting.md)
-- [GitHub Repository](https://github.com/Smeeth/gmcapsule-Docker)
+Get started in minutes:
 
-## Table of Contents
+1. **Pull the image**: `docker pull ghcr.io/smeeth/gmcapsule-docker:latest`
+2. **Create configuration**: See our [Quick Start Guide](quickstart.md)
+3. **Run the container**: Use Docker or Docker Compose
+4. **Access your capsule**: Connect with a Gemini browser
+
+```
+New to Gemini? Check out our [Quick Start Guide](quickstart.md) for a step-by-step walkthrough.
+```
+
+## Documentation
 
 ```
 :maxdepth: 2
 :caption: Getting Started
 
-installation
 quickstart
+installation
 configuration
 ```
 
@@ -56,7 +61,7 @@ extensions
 
 ```
 :maxdepth: 2
-:caption: Advanced
+:caption: Advanced Topics
 
 security
 deployment
@@ -82,7 +87,49 @@ changelog
 license
 ```
 
-## Indices and tables
+## Quick Links
+
+::::{grid} 2
+:gutter: 3
+
+:::{grid-item-card} 🚀 Quick Start
+:link: quickstart
+:link-type: doc
+
+Get your server running in 5 minutes
+:::
+
+:::{grid-item-card} ⚙️ Configuration
+:link: configuration
+:link-type: doc
+
+Complete configuration reference
+:::
+
+:::{grid-item-card} 📖 User Guide
+:link: usage
+:link-type: doc
+
+Learn how to use GmCapsule
+:::
+
+:::{grid-item-card} 🐛 Troubleshooting
+:link: troubleshooting
+:link-type: doc
+
+Common issues and solutions
+:::
+
+::::
+
+## Project Links
+
+- 📦 [GitHub Repository](https://github.com/Smeeth/gmcapsule-Docker)
+- 🐳 [Docker Hub](https://hub.docker.com/r/smeeth/gmcapsule-docker)
+- 🌐 [GmCapsule Upstream](https://git.skyjake.fi/gemini/gmcapsule/)
+- 💬 [Report Issues](https://github.com/Smeeth/gmcapsule-Docker/issues)
+
+## Indices and Tables
 
 * {ref}`genindex`
 * {ref}`modindex`

@@ -1,6 +1,4 @@
 # Configuration file for the Sphinx documentation builder.
-import os
-import sys
 from datetime import datetime
 
 # -- Project information -----------------------------------------------------
@@ -17,10 +15,8 @@ extensions = [
     'sphinx.ext.napoleon',      # Google/NumPy docstring style
     'sphinx.ext.viewcode',      # Add links to source code
     'sphinx.ext.intersphinx',   # Link to other project's documentation
-    'sphinx.ext.todo',          # Support for todo items
     'sphinx_copybutton',        # Add copy button to code blocks
-    'sphinxcontrib.mermaid',    # Mermaid diagram support
-    'sphinx_tabs.tabs',         # Tabbed content
+    'sphinx_design',            # Cards, tabs, grids, etc.
 ]
 
 # MyST Parser configuration
@@ -30,7 +26,7 @@ myst_enable_extensions = [
     "fieldlist",        # Field lists
     "substitution",     # Variable substitutions
     "tasklist",         # Task lists with checkboxes
-    "attrs_inline",     # Inline attributes
+    "attrs_inline",     # Inline attributes {.class}
     "attrs_block",      # Block attributes
 ]
 
@@ -43,15 +39,13 @@ source_suffix = {
 # The master toctree document
 master_doc = 'index'
 
-# Templates
+# Templates and exclusions
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_logo = None
-html_favicon = None
 
 html_theme_options = {
     'logo_only': False,
@@ -70,7 +64,7 @@ html_css_files = [
     'custom.css',
 ]
 
-# -- Options for LaTeX output ------------------------------------------------
+# -- Options for LaTeX/PDF output --------------------------------------------
 latex_elements = {
     'papersize': 'a4paper',
     'pointsize': '10pt',
@@ -79,12 +73,6 @@ latex_elements = {
 latex_documents = [
     (master_doc, 'gmcapsule-docker.tex', 'GmCapsule Docker Documentation',
      author, 'manual'),
-]
-
-# -- Options for manual page output ------------------------------------------
-man_pages = [
-    (master_doc, 'gmcapsule-docker', 'GmCapsule Docker Documentation',
-     [author], 1)
 ]
 
 # -- Options for Epub output -------------------------------------------------
@@ -98,7 +86,6 @@ intersphinx_mapping = {
 }
 
 # -- Extension configuration -------------------------------------------------
-todo_include_todos = True
 copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
 
