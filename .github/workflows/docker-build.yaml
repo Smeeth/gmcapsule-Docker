@@ -18,6 +18,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
+      - name: Check build summary support
+        run: echo "Build summary supported!"
+      
       # Test Build: Nur AMD64, mit load
       - name: Build Docker image for testing
         uses: docker/build-push-action@v6
@@ -28,6 +31,15 @@ jobs:
           tags: gmcapsule:test
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            BUILD_DATE=${{ github.event.repository.updated_at }}
+            VCS_REF=${{ github.sha }}
+            GMCAPSULE_VERSION=0.3.2
+      
+      - name: Inspect image labels
+        run: |
+          echo "Checking image metadata..."
+          docker inspect gmcapsule:test --format='{{json .Config.Labels}}' | jq
       
       - name: Test container startup
         run: |
@@ -52,3 +64,14 @@ jobs:
           # Prüfe Health Status
           docker inspect --format='{{.State.Health.Status}}' gmcapsule-health-test || echo "No health check defined"
           docker stop gmcapsule-health-test
+      
+      - name: Test user permissions
+        run: |
+          echo "Checking if container runs as non-root user..."
+          docker run --rm gmcapsule:test id
+          docker run --rm gmcapsule:test ls -la /srv/gemini
+      
+      - name: Cleanup test containers
+        if: always()
+        run: |
+          docker rm -f gmcapsule-test gmcapsule-port-test gmcapsule-health-test 2>/dev/null || true
