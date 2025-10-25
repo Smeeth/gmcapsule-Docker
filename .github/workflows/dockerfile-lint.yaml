@@ -1,0 +1,33 @@
+name: Dockerfile Lint
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-dockerfile:
+    name: Lint Dockerfile with Hadolint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          config: .hadolint.yaml
+
+      - name: Display Hadolint version and checks
+        run: |
+          hadolint --version
+          echo "Running Hadolint with configuration from .hadolint.yaml"
+          cat .hadolint.yaml
+      
+      - name: Run Hadolint manually (for detailed logs)
+        run: |
+          echo "Linting Dockerfile..."
+          hadolint --config .hadolint.yaml Dockerfile
