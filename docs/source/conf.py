@@ -1,14 +1,11 @@
 # Configuration file for the Sphinx documentation builder.
-# For the full list of built-in configuration values, see:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
 import os
 import sys
 from datetime import datetime
 
 # -- Project information -----------------------------------------------------
 project = 'GmCapsule Docker'
-copyright = f'2025, Eibo Richter'
+copyright = f'{datetime.now().year}, Eibo Richter'
 author = 'Eibo Richter'
 release = '1.0.0'
 version = '1.0'
@@ -28,14 +25,16 @@ extensions = [
 
 # MyST Parser configuration
 myst_enable_extensions = [
-    "colon_fence",
-    "deflist",
-    "fieldlist",
-    "substitution",
-    "tasklist",
+    "colon_fence",      # ::: fences
+    "deflist",          # Definition lists
+    "fieldlist",        # Field lists
+    "substitution",     # Variable substitutions
+    "tasklist",         # Task lists with checkboxes
+    "attrs_inline",     # Inline attributes
+    "attrs_block",      # Block attributes
 ]
 
-# Source files
+# Support both RST and Markdown
 source_suffix = {
     '.rst': 'restructuredtext',
     '.md': 'markdown',
@@ -46,7 +45,7 @@ master_doc = 'index'
 
 # Templates
 templates_path = ['_templates']
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'sphinx_rtd_theme'
@@ -102,3 +101,6 @@ intersphinx_mapping = {
 todo_include_todos = True
 copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
+
+# Suppress warnings for missing references
+suppress_warnings = ['ref.myst']
