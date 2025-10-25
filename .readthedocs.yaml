@@ -20,19 +20,20 @@ build:
             exit 183
           fi
         fi
-
-# Build documentation in the docs/ directory with Sphinx
-sphinx:
-  configuration: docs/source/conf.py
-  builder: html
-  fail_on_warning: false
+    pre_build:
+      # Install Python dependencies
+      - pip install --upgrade pip setuptools
+      - pip install -r docs/requirements.txt
+    post_build:
+      # Build Sphinx documentation explicitly from docs/source
+      - sphinx-build -b html docs/source $READTHEDOCS_OUTPUT/html
 
 # Optionally build your docs in additional formats
 formats:
   - pdf
   - epub
 
-# Python requirements to build docs
+# Python requirements (already handled in pre_build)
 python:
   install:
     - requirements: docs/requirements.txt
