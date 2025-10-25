@@ -1,0 +1,174 @@
+name: Documentation Check
+
+on:
+  push:
+    branches: [main, master, develop]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs-check.yaml'
+  pull_request:
+    branches: [main, master, develop]
+    paths:
+      - 'docs/**'
+
+jobs:
+  lint-and-build:
+    name: Lint & Build Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: 'docs/requirements.txt'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r docs/requirements.txt
+
+      - name: Check Markdown syntax
+        run: |
+          echo "Checking Markdown files for syntax errors..."
+          find docs/source -name "*.md" -type f | while read file; do
+            echo "Checking: $file"
+            python -c "
+          import sys
+          try:
+              with open('$file', 'r', encoding='utf-8') as f:
+                  content = f.read()
+                  # Basic checks
+                  if content.count('```') % 2 != 0:
+                      print(f'ERROR: Unmatched code fences in $file')
+                      sys.exit(1)
+                  if content.count(':::') % 2 != 0:
+                      print(f'WARNING: Unmatched directive markers in $file')
+              print(f'✓ $file OK')
+          except Exception as e:
+              print(f'ERROR in $file: {e}')
+              sys.exit(1)
+          "
+          done
+
+      - name: Build documentation (HTML)
+        run: |
+          cd docs
+          sphinx-build -W --keep-going -b html source _build/html
+        env:
+          SPHINXOPTS: "-W --keep-going"
+
+      - name: Check for broken links
+        run: |
+          cd docs
+          sphinx-build -W --keep-going -b linkcheck source _build/linkcheck
+        continue-on-error: true
+
+      - name: Test documentation build (strict mode)
+        run: |
+          cd docs
+          sphinx-build -W -b html source _build/html-strict
+        env:
+          SPHINXOPTS: "-W"
+
+      - name: Check for missing files referenced in toctree
+        run: |
+          cd docs
+          python -c "
+          import os
+          import re
+          from pathlib import Path
+          
+          source_dir = Path('source')
+          errors = []
+          
+          # Read index.md and find all toctree entries
+          index_file = source_dir / 'index.md'
+          if index_file.exists():
+              content = index_file.read_text()
+              # Find all entries in toctree blocks
+              toctree_pattern = r'\`\`\`\{toctree\}.*?\`\`\`'
+              matches = re.findall(toctree_pattern, content, re.DOTALL)
+              
+              for match in matches:
+                  lines = match.split('\n')
+                  for line in lines:
+                      line = line.strip()
+                      if line and not line.startswith(':') and not line.startswith('\`'):
+                          # This should be a file reference
+                          expected_file = source_dir / f'{line}.md'
+                          if not expected_file.exists():
+                              errors.append(f'Missing file: {expected_file}')
+          
+          if errors:
+              print('ERROR: Missing files in toctree:')
+              for error in errors:
+                  print(f'  - {error}')
+              exit(1)
+          else:
+              print('✓ All toctree files exist')
+          "
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-build
+          path: docs/_build/
+          retention-days: 7
+
+      - name: Comment PR with build status
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const buildLog = fs.existsSync('docs/_build/html/output.txt') 
+              ? fs.readFileSync('docs/_build/html/output.txt', 'utf8') 
+              : 'Build completed successfully';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 📚 Documentation Build Status\n\n✅ Documentation build completed successfully!\n\nYou can preview the built documentation in the artifacts section.`
+            });
+
+  markdown-lint:
+    name: Markdown Linting
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run markdownlint
+        uses: articulate/actions-markdownlint@v1
+        with:
+          config: .markdownlint.json
+          files: 'docs/source/**/*.md'
+          ignore: 'docs/_build'
+        continue-on-error: true
+
+  spell-check:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install codespell
+        run: pip install codespell
+
+      - name: Run spell check
+        run: |
+          codespell docs/source/*.md \
+            --skip="*.pyc,*.git,_build" \
+            --ignore-words-list="connexion,aks,te" \
+            --quiet-level=2
+        continue-on-error: true
