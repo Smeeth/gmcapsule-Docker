@@ -33,12 +33,12 @@
 *.tar binary
 
 # Makefiles & Dockerfiles
-Dockerfile text eol=lf
-Makefile text eol=lf
+Dockerfile text eol=lf working-tree-encoding=UTF-8
+Makefile text eol=lf working-tree-encoding=UTF-8
 
 # Optional: GitHub Actions (immer LF)
-*.yml text eol=lf
-*.yaml text eol=lf
+*.yml text eol=lf working-tree-encoding=UTF-8
+*.yaml text eol=lf working-tree-encoding=UTF-8
 
 # Optional: Verhindert falsche Commits, wenn CRLF vorkommt
 *.md text eol=lf working-tree-encoding=UTF-8
