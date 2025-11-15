@@ -2,7 +2,6 @@ name: Docker Build & Publish (GHCR)
 
 on:
   push:
-    branches: [main]
     tags: ["v*.*.*"]
   workflow_dispatch:
 
@@ -46,12 +45,7 @@ jobs:
       - name: Set GmCapsule version argument
         id: gmcapsule_ver
         run: |
-          # For tag builds, extract version after 'v', for branch/main, use Dockerfile default
-          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            version="${GITHUB_REF_NAME#v}"
-          else
-            version="0.9.8"
-          fi
+          version="${GITHUB_REF_NAME#v}"
           echo "version=${version}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
@@ -60,7 +54,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          # GHCR tag is always lowercase, safe format
           tags: |
             ghcr.io/${{ steps.imgname.outputs.image }}:latest
             ghcr.io/${{ steps.imgname.outputs.image }}:${{ steps.gmcapsule_ver.outputs.version }}
@@ -75,3 +68,12 @@ jobs:
             GMCAPSULE_VERSION=${{ steps.gmcapsule_ver.outputs.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
