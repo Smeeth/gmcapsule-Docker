@@ -1,5 +1,6 @@
 # GmCapsule Docker
 
+[![GmCapsule Version](https://img.shields.io/badge/GmCapsule-0.9.8-blue?style=flat-square)](https://github.com/skyjake/gmcapsule)
 [![Docker Build & Test](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/docker-build.yaml/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/docker-build.yaml)
 [![Security Scan](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/security-scan.yaml/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/security-scan.yaml)
 [![CodeQL Analysis](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/codeql.yaml/badge.svg)](https://github.com/Smeeth/gmcapsule-Docker/actions/workflows/codeql.yaml)
@@ -11,16 +12,16 @@ A production-ready Docker container for [GmCapsule](https://git.skyjake.fi/gemin
 
 ## ✨ Features
 
-- 🌐 **Gemini Protocol** - Full support for Gemini protocol (TLS 1.2/1.3)
-- 📤 **Titan Protocol** - File upload support via Titan
-- 🐍 **Python Extensions** - Extensible via Python modules
-- 🔒 **Secure** - Non-root user, read-only filesystem, signed images
-- 🚀 **Lightweight** - Alpine Linux based (~52MB compressed)
-- 🏗️ **Multi-Architecture** - Native support for AMD64 and ARM64
-- 🔧 **CGI Support** - Dynamic content generation via CGI scripts
-- 📁 **Static Files** - Simple static file serving
-- 🔐 **Auto TLS** - Automatic self-signed certificate generation
-- 📊 **Health Checks** - Built-in container health monitoring
+-   🌐 **Gemini Protocol** - Full support for Gemini protocol (TLS 1.2/1.3)
+-   📤 **Titan Protocol** - File upload support via Titan
+-   🐍 **Python Extensions** - Extensible via Python modules
+-   🔒 **Secure** - Non-root user, read-only filesystem, signed images
+-   🚀 **Lightweight** - Alpine Linux based (~52MB compressed)
+-   🏗️ **Multi-Architecture** - Native support for AMD64 and ARM64
+-   🔧 **CGI Support** - Dynamic content generation via CGI scripts
+-   📁 **Static Files** - Simple static file serving
+-   🔐 **Auto TLS** - Automatic self-signed certificate generation
+-   📊 **Health Checks** - Built-in container health monitoring
 
 ## 🚀 Quick Start
 
@@ -100,12 +101,13 @@ docker run -d \
 
 Use a Gemini browser to access your capsule:
 
-- **[Lagrange](https://gmi.skyjake.fi/lagrange/)** - Beautiful GUI browser (Windows, macOS, Linux)
-- **[Amfora](https://github.com/makeworld-the-better-one/amfora)** - Terminal-based browser
-- **[Kristall](https://github.com/MasterQ32/kristall)** - Cross-platform GUI browser
-- **[Castor](https://git.sr.ht/~julienxx/castor)** - GTK browser for Linux
+-   **[Lagrange](https://gmi.skyjake.fi/lagrange/)** - Beautiful GUI browser (Windows, macOS, Linux)
+-   **[Amfora](https://github.com/makeworld-the-better-one/amfora)** - Terminal-based browser
+-   **[Kristall](https://github.com/MasterQ32/kristall)** - Cross-platform GUI browser
+-   **[Castor](https://git.sr.ht/~julienxx/castor)** - GTK browser for Linux
 
 Navigate to:
+
 ```
 gemini://localhost/
 ```
@@ -175,10 +177,10 @@ bin_root = /srv/gemini/cgi-bin  # CGI directory (optional)
 
 For production deployments, consider:
 
-- Setting a custom `hostname` (your domain)
-- Using Let's Encrypt certificates (mount to `/srv/gemini/certs`)
-- Configuring reverse proxy (Traefik, Nginx) for external access
-- Setting up logging and monitoring
+-   Setting a custom `hostname` (your domain)
+-   Using Let's Encrypt certificates (mount to `/srv/gemini/certs`)
+-   Configuring reverse proxy (Traefik, Nginx) for external access
+-   Setting up logging and monitoring
 
 ## 📝 Writing Gemini Content
 
@@ -204,8 +206,10 @@ This is a paragraph of text in gemtext format.
 ## Preformatted Text
 
 ```
+
 ASCII Art or Code
 Goes Here
+
 ```
 
 > This is a quote
@@ -213,13 +217,13 @@ Goes Here
 
 ### Gemtext Syntax Reference
 
-- `# Heading` - Level 1 heading
-- `## Heading` - Level 2 heading
-- `### Heading` - Level 3 heading
-- `=> URL Text` - Link
-- `* Item` - List item
-- `> Quote` - Quoted text
-- ` ```
+-   `# Heading` - Level 1 heading
+-   `## Heading` - Level 2 heading
+-   `### Heading` - Level 3 heading
+-   `=> URL Text` - Link
+-   `* Item` - List item
+-   `> Quote` - Quoted text
+-   ` ```
 
 ## 🔧 CGI Scripts
 
@@ -243,19 +247,20 @@ print(f"Request URL: {os.getenv('GEMINI_URL', 'unknown')}")
 ```
 
 Make it executable:
+
 ```bash
 chmod +x cgi-bin/localhost/script.py
 ```
 
 ### Available CGI Environment Variables
 
-- `GEMINI_URL` - Full request URL
-- `SCRIPT_NAME` - Script path
-- `PATH_INFO` - Extra path info
-- `QUERY_STRING` - Query string
-- `REMOTE_IDENT` - Client certificate identifier
-- `TLS_CIPHER` - TLS cipher used
-- `TLS_VERSION` - TLS version
+-   `GEMINI_URL` - Full request URL
+-   `SCRIPT_NAME` - Script path
+-   `PATH_INFO` - Extra path info
+-   `QUERY_STRING` - Query string
+-   `REMOTE_IDENT` - Client certificate identifier
+-   `TLS_CIPHER` - TLS cipher used
+-   `TLS_VERSION` - TLS version
 
 ## 🐍 Python Extensions
 
@@ -286,34 +291,34 @@ def api_handler(req):
 
 ## 🌍 Environment Variables
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PYTHONUNBUFFERED` | `1` | Unbuffered Python output |
-| `TZ` | `Europe/Berlin` | Timezone for logs |
-| `GMCAPSULE_PORT` | `1965` | Override default port |
-| `GMCAPSULE_HOST` | `0.0.0.0` | Bind address |
+| Variable           | Default         | Description              |
+| ------------------ | --------------- | ------------------------ |
+| `PYTHONUNBUFFERED` | `1`             | Unbuffered Python output |
+| `TZ`               | `Europe/Berlin` | Timezone for logs        |
+| `GMCAPSULE_PORT`   | `1965`          | Override default port    |
+| `GMCAPSULE_HOST`   | `0.0.0.0`       | Bind address             |
 
 ## 💾 Volumes
 
-| Path | Purpose | Mode | Notes |
-|------|---------|------|-------|
-| `/etc/gmcapsule/config.ini` | Configuration file | `ro` | Required |
-| `/srv/gemini/content` | Static content | `ro` | Gemtext files |
-| `/srv/gemini/cgi-bin` | CGI scripts | `ro` | Must be executable |
-| `/srv/gemini/modules` | Python extensions | `ro` | Numbered .py files |
-| `/srv/gemini/certs` | TLS certificates | `rw` | Auto-generated if missing |
+| Path                        | Purpose            | Mode | Notes                     |
+| --------------------------- | ------------------ | ---- | ------------------------- |
+| `/etc/gmcapsule/config.ini` | Configuration file | `ro` | Required                  |
+| `/srv/gemini/content`       | Static content     | `ro` | Gemtext files             |
+| `/srv/gemini/cgi-bin`       | CGI scripts        | `ro` | Must be executable        |
+| `/srv/gemini/modules`       | Python extensions  | `ro` | Numbered .py files        |
+| `/srv/gemini/certs`         | TLS certificates   | `rw` | Auto-generated if missing |
 
 ## 🔒 Security Features
 
-- ✅ **Non-root execution** - Runs as `gemini:gemini` (UID/GID 1000)
-- ✅ **Read-only root filesystem** - Prevents container modification
-- ✅ **No new privileges** - Security flag enabled
-- ✅ **Resource limits** - Memory and CPU limits enforced
-- ✅ **Health checks** - Automatic container health monitoring
-- ✅ **Image signing** - Signed with Cosign
-- ✅ **SBOM included** - Software Bill of Materials
-- ✅ **Vulnerability scanning** - Trivy scans on every build
-- ✅ **Provenance attestation** - Build provenance included
+-   ✅ **Non-root execution** - Runs as `gemini:gemini` (UID/GID 1000)
+-   ✅ **Read-only root filesystem** - Prevents container modification
+-   ✅ **No new privileges** - Security flag enabled
+-   ✅ **Resource limits** - Memory and CPU limits enforced
+-   ✅ **Health checks** - Automatic container health monitoring
+-   ✅ **Image signing** - Signed with Cosign
+-   ✅ **SBOM included** - Software Bill of Materials
+-   ✅ **Vulnerability scanning** - Trivy scans on every build
+-   ✅ **Provenance attestation** - Build provenance included
 
 ### Verifying Image Signature
 
@@ -342,9 +347,10 @@ docker inspect --format='{{json .State.Health}}' gmcapsule | jq
 ```
 
 Health check runs every 30 seconds and verifies:
-- Port 1965 is accepting connections
-- Python process is running
-- Container can respond to requests
+
+-   Port 1965 is accepting connections
+-   Python process is running
+-   Container can respond to requests
 
 ## 🐛 Troubleshooting
 
@@ -415,25 +421,25 @@ docker exec gmcapsule python3 -c "import gmcapsule; print('OK')"
 
 ### Resource Usage
 
-- **Memory**: ~128MB typical, 256MB limit
-- **CPU**: 0.25 cores reserved, 1.0 core limit  
-- **Startup**: ~2-3 seconds
-- **Image Size**: ~52MB compressed, ~140MB uncompressed
-- **Connections**: Limited by Python asyncio (typically 1000+)
+-   **Memory**: ~128MB typical, 256MB limit
+-   **CPU**: 0.25 cores reserved, 1.0 core limit
+-   **Startup**: ~2-3 seconds
+-   **Image Size**: ~52MB compressed, ~140MB uncompressed
+-   **Connections**: Limited by Python asyncio (typically 1000+)
 
 ### Optimization Tips
 
-- Use read-only volumes where possible
-- Mount certificates volume for persistence
-- Use Docker BuildKit cache for faster builds
-- Consider using `--memory=256m --cpus=1` limits
+-   Use read-only volumes where possible
+-   Mount certificates volume for persistence
+-   Use Docker BuildKit cache for faster builds
+-   Consider using `--memory=256m --cpus=1` limits
 
 ## 🏗️ Multi-Architecture Support
 
 Pre-built images are available for:
 
-- **linux/amd64** - x86_64 (Intel/AMD)
-- **linux/arm64** - ARM64 (Apple Silicon, Raspberry Pi 4/5, AWS Graviton)
+-   **linux/amd64** - x86_64 (Intel/AMD)
+-   **linux/arm64** - ARM64 (Apple Silicon, Raspberry Pi 4/5, AWS Graviton)
 
 Docker automatically pulls the correct architecture:
 
@@ -484,36 +490,36 @@ docker stop gmcapsule-test && docker rm gmcapsule-test
 
 ## 📦 Related Projects
 
-- [GmCapsule](https://git.skyjake.fi/gemini/gmcapsule/) - The original server
-- [Lagrange](https://gmi.skyjake.fi/lagrange/) - Gemini browser by the same author
-- [Awesome Gemini](https://github.com/kr1sp1n/awesome-gemini) - Curated Gemini resources
-- [Gemini Protocol Specification](https://geminiprotocol.net/docs/specification.gmi)
-- [Geminispace.info](https://geminispace.info/) - Gemini search engine
+-   [GmCapsule](https://git.skyjake.fi/gemini/gmcapsule/) - The original server
+-   [Lagrange](https://gmi.skyjake.fi/lagrange/) - Gemini browser by the same author
+-   [Awesome Gemini](https://github.com/kr1sp1n/awesome-gemini) - Curated Gemini resources
+-   [Gemini Protocol Specification](https://geminiprotocol.net/docs/specification.gmi)
+-   [Geminispace.info](https://geminispace.info/) - Gemini search engine
 
 ## 📚 Resources
 
 ### Documentation
 
-- 📖 [GmCapsule Documentation](https://geminispace.org/gmcapsule/)
-- 🌐 [Gemini Protocol](https://geminiprotocol.net/)
-- 📝 [Gemtext Format](https://geminiprotocol.net/docs/gemtext.gmi)
-- 🐋 [Docker Documentation](https://docs.docker.com/)
+-   📖 [GmCapsule Documentation](https://geminispace.org/gmcapsule/)
+-   🌐 [Gemini Protocol](https://geminiprotocol.net/)
+-   📝 [Gemtext Format](https://geminiprotocol.net/docs/gemtext.gmi)
+-   🐋 [Docker Documentation](https://docs.docker.com/)
 
 ### Community
 
-- 💬 [GitHub Issues](https://github.com/Smeeth/gmcapsule-Docker/issues)
-- 🗣️ [Reddit /r/Gemini](https://reddit.com/r/geminiprotocol)
+-   💬 [GitHub Issues](https://github.com/Smeeth/gmcapsule-Docker/issues)
+-   🗣️ [Reddit /r/Gemini](https://reddit.com/r/geminiprotocol)
 
 ## 🔖 Version Tags
 
 Images are tagged with multiple versions:
 
-- `latest` - Latest stable release
-- `v1.0.0` - Specific version
-- `v1.0` - Minor version
-- `v1` - Major version
-- `main` - Latest main branch build
-- `sha-abc1234` - Specific commit
+-   `latest` - Latest stable release
+-   `v1.0.0` - Specific version
+-   `v1.0` - Minor version
+-   `v1` - Major version
+-   `main` - Latest main branch build
+-   `sha-abc1234` - Specific commit
 
 ```bash
 # Pull specific version
@@ -525,23 +531,18 @@ docker pull ghcr.io/smeeth/gmcapsule-docker:latest
 
 ## 📜 License
 
-- **GmCapsule**: BSD-2-Clause License (see [upstream](https://git.skyjake.fi/gemini/gmcapsule/))
-- **Docker Setup**: BSD-2-Clause License (see [LICENSE](LICENSE))
+-   **GmCapsule**: BSD-2-Clause License (see [upstream](https://git.skyjake.fi/gemini/gmcapsule/))
+-   **Docker Setup**: BSD-2-Clause License (see [LICENSE](LICENSE))
 
 ## 🙏 Acknowledgments
 
-- **[skyjake](https://skyjake.fi/)** - For creating GmCapsule and Lagrange
-- **Gemini community** - For the excellent protocol and ecosystem
-- **Contributors** - Everyone who has contributed to this project
+-   **[skyjake](https://skyjake.fi/)** - For creating GmCapsule and Lagrange
+-   **Gemini community** - For the excellent protocol and ecosystem
+-   **Contributors** - Everyone who has contributed to this project
 
 ## 📊 Project Status
 
-
-
-
-
-
-***
+---
 
 <div align="center">
 
