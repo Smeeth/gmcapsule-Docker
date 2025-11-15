@@ -1,0 +1,15 @@
+name: GHCR Cleanup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * 0'  # Sonntags um 2:00 Uhr UTC
+
+jobs:
+  ghcr-cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup untagged images from GHCR
+        uses: dataaxiom/ghcr-cleanup-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
