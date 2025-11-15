@@ -8,7 +8,7 @@
 # Build arguments
 ARG PYTHON_VERSION=3.13
 ARG ALPINE_VERSION=3.20
-ARG GMCAPSULE_VERSION=0.3.2
+ARG GMCAPSULE_VERSION=0.9.8
 
 # =============================================================================
 # Builder Stage - Install dependencies
@@ -21,8 +21,8 @@ LABEL stage=builder
 # Install build dependencies
 RUN --mount=type=cache,target=/var/cache/apk \
     apk add --no-cache \
-        build-base \
-        openssl-dev
+    build-base \
+    openssl-dev
 
 # Install GmCapsule with pinned version
 ARG GMCAPSULE_VERSION
@@ -42,29 +42,29 @@ ARG VCS_REF
 
 # OCI Image Labels (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.title="GmCapsule Docker" \
-      org.opencontainers.image.description="Extensible Gemini and Titan protocol server" \
-      org.opencontainers.image.authors="Eibo Richter <eibo.richter@gmail.com>" \
-      org.opencontainers.image.vendor="Smeeth" \
-      org.opencontainers.image.licenses="BSD-2-Clause" \
-      org.opencontainers.image.url="https://github.com/Smeeth/gmcapsule-Docker" \
-      org.opencontainers.image.source="https://github.com/Smeeth/gmcapsule-Docker" \
-      org.opencontainers.image.documentation="https://github.com/Smeeth/gmcapsule-Docker/blob/main/README.md" \
-      org.opencontainers.image.version="${GMCAPSULE_VERSION}" \
-      org.opencontainers.image.created="${BUILD_DATE}" \
-      org.opencontainers.image.revision="${VCS_REF}"
+    org.opencontainers.image.description="Extensible Gemini and Titan protocol server" \
+    org.opencontainers.image.authors="Eibo Richter <eibo.richter@gmail.com>" \
+    org.opencontainers.image.vendor="Smeeth" \
+    org.opencontainers.image.licenses="BSD-2-Clause" \
+    org.opencontainers.image.url="https://github.com/Smeeth/gmcapsule-Docker" \
+    org.opencontainers.image.source="https://github.com/Smeeth/gmcapsule-Docker" \
+    org.opencontainers.image.documentation="https://github.com/Smeeth/gmcapsule-Docker/blob/main/README.md" \
+    org.opencontainers.image.version="${GMCAPSULE_VERSION}" \
+    org.opencontainers.image.created="${BUILD_DATE}" \
+    org.opencontainers.image.revision="${VCS_REF}"
 
 # Custom labels
 LABEL maintainer="Eibo Richter <eibo.richter@gmail.com>" \
-      com.gmcapsule.version="${GMCAPSULE_VERSION}" \
-      com.gmcapsule.protocol="gemini,titan" \
-      com.gmcapsule.port="1965"
+    com.gmcapsule.version="${GMCAPSULE_VERSION}" \
+    com.gmcapsule.protocol="gemini,titan" \
+    com.gmcapsule.port="1965"
 
 # Install runtime dependencies only
 RUN --mount=type=cache,target=/var/cache/apk \
     apk add --no-cache \
-        ca-certificates \
-        openssl \
-        tzdata && \
+    ca-certificates \
+    openssl \
+    tzdata && \
     # Create non-root user with explicit UID/GID
     addgroup -g 1000 gemini && \
     adduser -D -u 1000 -G gemini -h /home/gemini -s /bin/sh gemini
@@ -77,14 +77,14 @@ WORKDIR /srv/gemini
 
 # Create directory structure with proper permissions
 RUN mkdir -p \
-        /srv/gemini/content \
-        /srv/gemini/cgi-bin \
-        /srv/gemini/modules \
-        /srv/gemini/certs \
-        /etc/gmcapsule && \
+    /srv/gemini/content \
+    /srv/gemini/cgi-bin \
+    /srv/gemini/modules \
+    /srv/gemini/certs \
+    /etc/gmcapsule && \
     chown -R gemini:gemini \
-        /srv/gemini \
-        /etc/gmcapsule && \
+    /srv/gemini \
+    /etc/gmcapsule && \
     chmod 755 /srv/gemini/cgi-bin
 
 # Environment variables
