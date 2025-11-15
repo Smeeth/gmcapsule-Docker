@@ -8,8 +8,22 @@ on:
 jobs:
   ghcr-cleanup:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Set sanitized package name (lowercase, dashes)
+        id: pkgname
+        run: |
+          # Set your package/repo name here!
+          pkg="gmcapsule-Docker"
+          pkg="${pkg,,}"            # Lowercase
+          pkg="${pkg//_/-}"         # Underscore to dash
+          pkg="${pkg// /}"          # Remove spaces
+          echo "name=${pkg}" >> $GITHUB_OUTPUT
+
       - name: Cleanup untagged images from GHCR
         uses: dataaxiom/ghcr-cleanup-action@v1
+        with:
+          package: ${{ steps.pkgname.outputs.name }}
+          delete-untagged: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
