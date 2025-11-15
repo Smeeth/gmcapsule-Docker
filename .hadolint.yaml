@@ -1,14 +1,13 @@
 failure-threshold: warning
 
 ignored:
-  - DL3018  # Pin versions in apk add (oft zu streng für Alpine)
-  - DL3059  # Multiple consecutive RUN commands
+    - DL3018 # Pin versions in apk add (oft zu streng für Alpine)
+    - DL3059 # Multiple consecutive RUN commands
 
 trustedRegistries:
-  - docker.io
-  - ghcr.io
-  - python
-
+    - docker.io
+    - ghcr.io
+    - python
 # Optional: Strikte Regeln für Production
 # override:
 #   error:

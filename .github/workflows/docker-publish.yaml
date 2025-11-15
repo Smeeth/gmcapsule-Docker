@@ -1,77 +1,77 @@
 name: Docker Build & Publish (GHCR)
 
 on:
-    push:
-        branches: [main]
-        tags: ["v*.*.*"]
-    workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ["v*.*.*"]
+  workflow_dispatch:
 
 env:
-    REGISTRY: ghcr.io
+  REGISTRY: ghcr.io
 
 jobs:
-    build-and-publish:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-            - name: Log in to GHCR
-              uses: docker/login-action@v3
-              with:
-                  registry: ghcr.io
-                  username: ${{ github.actor }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Set sanitized image name (lowercase, dashes)
-              id: imgname
-              run: |
-                  repo="${GITHUB_REPOSITORY,,}"      # Lowercase
-                  repo="${repo//_/-}"                # Underscore → dash
-                  repo="${repo// /}"                 # Remove spaces
-                  imgname="${repo}"
-                  echo "image=${imgname}" >> $GITHUB_OUTPUT
+      - name: Set sanitized image name (lowercase, dashes)
+        id: imgname
+        run: |
+          repo="${GITHUB_REPOSITORY,,}"      # Lowercase
+          repo="${repo//_/-}"                # Underscore → dash
+          repo="${repo// /}"                 # Remove spaces
+          imgname="${repo}"
+          echo "image=${imgname}" >> $GITHUB_OUTPUT
 
-            - name: Set build timestamp
-              id: timestamp
-              run: echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+      - name: Set build timestamp
+        id: timestamp
+        run: echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
-            - name: Set GmCapsule version argument
-              id: gmcapsule_ver
-              run: |
-                  # For tag builds, extract version after 'v', for branch/main, use Dockerfile default
-                  if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-                    version="${GITHUB_REF_NAME#v}"
-                  else
-                    version="0.9.8"
-                  fi
-                  echo "version=${version}" >> $GITHUB_OUTPUT
+      - name: Set GmCapsule version argument
+        id: gmcapsule_ver
+        run: |
+          # For tag builds, extract version after 'v', for branch/main, use Dockerfile default
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="0.9.8"
+          fi
+          echo "version=${version}" >> $GITHUB_OUTPUT
 
-            - name: Build and push Docker image
-              uses: docker/build-push-action@v6
-              with:
-                  context: .
-                  platforms: linux/amd64,linux/arm64
-                  push: true
-                  # GHCR tag is always lowercase, safe format
-                  tags: |
-                      ghcr.io/${{ steps.imgname.outputs.image }}:latest
-                      ghcr.io/${{ steps.imgname.outputs.image }}:${{ steps.gmcapsule_ver.outputs.version }}
-                  labels: |
-                      org.opencontainers.image.revision=${{ github.sha }}
-                      org.opencontainers.image.created=${{ steps.timestamp.outputs.date }}
-                      org.opencontainers.image.version=${{ steps.gmcapsule_ver.outputs.version }}
-                      org.opencontainers.image.source=https://github.com/${{ github.repository }}
-                  build-args: |
-                      BUILD_DATE=${{ steps.timestamp.outputs.date }}
-                      VCS_REF=${{ github.sha }}
-                      GMCAPSULE_VERSION=${{ steps.gmcapsule_ver.outputs.version }}
-                  cache-from: type=gha
-                  cache-to: type=gha,mode=max
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          # GHCR tag is always lowercase, safe format
+          tags: |
+            ghcr.io/${{ steps.imgname.outputs.image }}:latest
+            ghcr.io/${{ steps.imgname.outputs.image }}:${{ steps.gmcapsule_ver.outputs.version }}
+          labels: |
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.created=${{ steps.timestamp.outputs.date }}
+            org.opencontainers.image.version=${{ steps.gmcapsule_ver.outputs.version }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          build-args: |
+            BUILD_DATE=${{ steps.timestamp.outputs.date }}
+            VCS_REF=${{ github.sha }}
+            GMCAPSULE_VERSION=${{ steps.gmcapsule_ver.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

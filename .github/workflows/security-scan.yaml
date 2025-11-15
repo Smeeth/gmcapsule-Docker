@@ -2,14 +2,14 @@ name: Security Scan
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'docs/**'
-      - '**.md'
+      - "docs/**"
+      - "**.md"
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
-    - cron: '0 6 * * 1'  # Jeden Montag um 6 Uhr
+    - cron: "0 6 * * 1" # Jeden Montag um 6 Uhr
   workflow_dispatch:
 
 permissions:
@@ -20,11 +20,11 @@ jobs:
   trivy-scan:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
-      
+
       - name: Build image for scanning
         uses: docker/build-push-action@v6
         with:
@@ -32,38 +32,38 @@ jobs:
           load: true
           tags: gmcapsule:scan
           cache-from: type=gha
-      
+
       - name: Run Trivy vulnerability scanner (SARIF)
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          image-ref: 'gmcapsule:scan'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH'
+          image-ref: "gmcapsule:scan"
+          format: "sarif"
+          output: "trivy-results.sarif"
+          severity: "CRITICAL,HIGH"
           ignore-unfixed: true
-      
+
       - name: Upload Trivy results to GitHub Security
         uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
-          sarif_file: 'trivy-results.sarif'
-      
+          sarif_file: "trivy-results.sarif"
+
       - name: Run Trivy vulnerability scanner (Table)
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          image-ref: 'gmcapsule:scan'
-          format: 'table'
-          exit-code: '1'  # Fail bei Critical/High
-          severity: 'CRITICAL,HIGH'
+          image-ref: "gmcapsule:scan"
+          format: "table"
+          exit-code: "1" # Fail bei Critical/High
+          severity: "CRITICAL,HIGH"
           ignore-unfixed: true
-      
+
       - name: Generate SBOM
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          image-ref: 'gmcapsule:scan'
-          format: 'cyclonedx'
-          output: 'trivy-sbom.json'
-      
+          image-ref: "gmcapsule:scan"
+          format: "cyclonedx"
+          output: "trivy-sbom.json"
+
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v5
         if: always()
